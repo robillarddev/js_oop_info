@@ -37,7 +37,7 @@ function className() {
 }
 ```
 
-## Public ##
+## Privileged ##
 ``` javascript 
 function className() {
     //public field
@@ -53,7 +53,7 @@ function className() {
 - Unique to each class instance
 
 
-## Privileged##
+## Public ##
 ``` javascript 
 function className() {}
 //privileged field
