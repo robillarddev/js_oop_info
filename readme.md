@@ -110,7 +110,9 @@ className.methodName = function() {
  - [Naming of Public, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
  - [Using this vs prototype](http://stackoverflow.com/a/310914/1571103)
  - [Basic Inheritance](http://stackoverflow.com/a/10430875/1571103)
- - [Performance of Prototype vs this](http://stackoverflow.com/questions/3493252/javascript-prototype-operator-performance-saves-memory-but-is-it-faster)
+ - Performance
+	 - [Performance of Prototype vs this](http://stackoverflow.com/questions/3493252/javascript-prototype-operator-performance-saves-memory-but-is-it-faster)
+	 - [jsperf Prototype vs Non-Prototype](http://jsperf.com/prototype-vs-non-prototype/11)
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
