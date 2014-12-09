@@ -112,7 +112,7 @@ className.methodName = function() {
  - [Basic Inheritance](http://stackoverflow.com/a/10430875/1571103)
  - Performance
 	 - [My jsperf test](http://jsperf.com/sevin7-public-vs-privileged-methods)
-		 - Result: Prototype is easily 100x faster, but it doesn't work properly with Tern. For my purposes I will keep using `this` *(privileged)* as it still only takes about 1ms to instantiate 
+		 - Result: Prototype is easily 100x faster. Testing creating 100 instances of my `apField` class and it took about 5ms. After changing the class and its base classes to use prototype where possible, the same 100 instances takes less than 1ms.
 	 - [Performance of Prototype vs this](http://stackoverflow.com/questions/3493252/javascript-prototype-operator-performance-saves-memory-but-is-it-faster)
 	 - [jsperf Prototype vs Non-Prototype](http://jsperf.com/prototype-vs-non-prototype/11)
  - [Classical Inheritance in Javascript (Douglas Crockford)](http://www.crockford.com/javascript/inheritance.html)
