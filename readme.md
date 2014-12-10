@@ -1,4 +1,10 @@
-# Javascript OOP Basics *(No Inheritance)*#
+# Javascript OOP#
+
+## Files ##
+- [Class Template](https://github.com/sevin7676/js_oop_info/blob/master/classTemplate.js)
+- [Annotated Class Template](https://github.com/sevin7676/js_oop_info/blob/master/classTemplateAnnotated.js) *(with build in tests)*
+- [Minimal inheritance library](https://github.com/sevin7676/js_oop_info/blob/master/inheritanceLib.js) *(required for using template)*
+
 
 ## Terminology ##
 - **Field:** a variable that is not a function `var x = 1;`
