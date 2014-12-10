@@ -1,7 +1,6 @@
 var className = (function() {
     // template info: https://github.com/sevin7676/js_oop_info/blob/master/classTemplateAnnotated.js
-    var local = this,
-        Class = null,
+    var Class, local = this,
         parentClass = null,
         mixins = [];
 
@@ -18,7 +17,7 @@ var className = (function() {
 
     (function Prototype() {
         if (mixins.length) OOP.mixin(this, mixins);
-        
+
         //this.demo = function() {var sf = this;};
     }).call(Class.prototype);
 

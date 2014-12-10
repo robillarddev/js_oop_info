@@ -101,7 +101,7 @@ var className = (function() {
     /** local scope, used for private static vars */
     var local = this,
         /** object that holds the class in local scope, is upper case becase 'class' is reserved in ES6  */
-        Class = null,
+        Class,
         /** optionally set this to a parent class to inherit prototype and constructor from */
         parentClass = null,
         /** optionally set this to one or more classes to mixin to this classes prototype */
