@@ -13,11 +13,11 @@ var className = (function() {
             
             (function Public() {}).call(sf);
         };
-        if (parentClass) OOP.inherits(Class, parentClass);
     })();
 
     (function Prototype() {
-        if (mixins.length) OOP.mixin(this, mixins);
+        if (parentClass) microMixin(this, parentClass.prototype);
+        if (mixins.length) microMixin(this, mixins);
 
         //this.demo = function() {var sf = this;};
     }).call(Class.prototype);
