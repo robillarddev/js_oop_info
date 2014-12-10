@@ -7,8 +7,7 @@ var className = (function() {
 
     (function Instance() {
         Class = function(param1) {
-            var _sf = {};
-            var sf = this;
+            var _sf = {}, sf = this;
             if (parentClass) parentClass.call(this /*, args*/ );
 
             (function Private() {
@@ -16,28 +15,28 @@ var className = (function() {
             }).call(_sf);
 
             (function Public() {
-               
+
             }).call(sf);
         };
     })();
 
     (function Prototype() {
         if (mixins.length) OOP.mixin(this, mixins);
-    
+
         this.methodName = function() {
             var sf = this;
         };
     }).call(Class.prototype);
 
     (function Static() {
+        var _sf = local,
+            sf = Class;
         (function Private() {
-            var _sf = this;
-            var sf = Class;
+
         }).call(local);
 
         (function Public() {
-            var _sf = local;
-            var sf = this;
+
         }).call(Class);
     })();
 

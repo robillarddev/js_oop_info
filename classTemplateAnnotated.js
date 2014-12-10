@@ -113,10 +113,7 @@ var className = (function() {
 
     (function Instance() {
         Class = function(param1) {
-            /** private instance of current class (sf=self)*/
-            var _sf = {};
-            /** public instance of current class (sf=self) */
-            var sf = this;
+            var _sf = {}, sf = this;
             if (parentClass) parentClass.call(this /*optionally pass args*/ ); //inherit the constructor of parent class if specified
 
             (function Private() {
@@ -165,9 +162,8 @@ var className = (function() {
     }).call(Class.prototype);
 
     (function Static() {
+        var _sf = local, sf = Class;
         (function Private() {
-            var _sf = this;
-            var sf = Class;
             /** private static field */
             this.privateStaticExampleField = 'private static; ';
             /** private static method **/
@@ -179,8 +175,6 @@ var className = (function() {
         }).call(local);
 
         (function Public() {
-            var _sf = local;
-            var sf = this;
             /** public static field */
             this.publicStaticExampleField = 'public static; ';
             /** public static method **/
