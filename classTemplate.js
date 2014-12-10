@@ -1,5 +1,5 @@
 var className = (function() {
-    // https://github.com/sevin7676/js_oop_info/blob/master/classTemplateAnnotated.js
+    // template info: https://github.com/sevin7676/js_oop_info/blob/master/classTemplateAnnotated.js
     var local = this,
         Class = null,
         parentClass = null,
