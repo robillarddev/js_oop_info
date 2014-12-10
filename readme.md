@@ -113,6 +113,22 @@ className.methodName = function() {
 - Shared by all class instances and globally as this is a singleton pattern *(modifying a method changes the method globally)*
 
 
+
+# Inheritance#
+ - Prototype Inheritance *(two methods for doing this)*
+	 - Inherit the prototype of an object using a mixin
+			 - Can inherit multiple prototypes using mixins
+			 - If the object that is mixed in changes after its mixed in, it will have no effect on the objects that have already received the mixin *(because the mixin copies the members)*
+	 - Inherit the prototype of an object using Object.create
+		 - Can only be used once per object
+		 - If the parent class prototype is changed, then all child classes will also be changed *(because the inheritance links to the parent class members)*
+ - Constructor Inhertiance
+	 - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
+		 - Can only be used once
+
+
+
+
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
  - [Using this vs prototype](http://stackoverflow.com/a/310914/1571103)
@@ -126,18 +142,9 @@ className.methodName = function() {
 	 - [Classical Inheritance in Javascript (Douglas Crockford)](http://www.crockford.com/javascript/inheritance.html)
 	 - [Folding pattern](http://intrepidis.blogspot.com/2013/04/javascript-folding-pattern.html)
 	 - [StackOverflow OOP Pattern](http://stackoverflow.com/a/1114121/1571103)
- - Inheritance
-	 - [Ace Editor OOP Inheritance](https://github.com/ajaxorg/ace/blob/master/lib/ace/lib/oop.js#L34)
-		 - *(not sure where the code came from, see [this StackOverflow question](http://stackoverflow.com/questions/21369432/why-should-we-use-object-create) about the same code*
-	 - Inheritance Methods
-		 - Prototype Inheritance
-			 - Inherit the prototype of an object using a mixin
-	 			 - Can inherit multiple prototypes using mixins
-			 - Inherit the prototype of an object using Object.create
-				 - Can only be used once
-		 - Constructor Inhertiance
-			 - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
-				 - Can only be used once
+- Inheritance
+- [Ace Editor OOP Inheritance](https://github.com/ajaxorg/ace/blob/master/lib/ace/lib/oop.js#L34)
+ - *(not sure where the code came from, see [this StackOverflow question](http://stackoverflow.com/questions/21369432/why-should-we-use-object-create) about the same code*
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
