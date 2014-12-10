@@ -148,4 +148,3 @@ className.methodName = function() {
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
-- [ ] Add information about inheritance
