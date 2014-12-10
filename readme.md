@@ -125,6 +125,8 @@ className.methodName = function() {
  - OOP Patterns
 	 - [Classical Inheritance in Javascript (Douglas Crockford)](http://www.crockford.com/javascript/inheritance.html)
 	 - [StackOverflow OOP Pattern](http://stackoverflow.com/a/1114121/1571103)
+ - Inheritance
+	 - [Ace Editor OOP Inheritance](https://github.com/ajaxorg/ace/blob/master/lib/ace/lib/oop.js#L34)
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
