@@ -125,7 +125,7 @@ className.methodName = function() {
  - Can only be used once per object
  - If the parent class prototype is changed, then all child classes will also be changed *(because the inheritance links to the parent class members)*
  
-### Constructor Inheritance ###
+### Constructor Inheritance *(Instance  members)*###
  - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
  - Can only be used once
 
