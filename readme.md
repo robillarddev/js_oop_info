@@ -115,18 +115,17 @@ className.methodName = function() {
 
 
 # Inheritance#
- - Prototype Inheritance *(two methods for doing this)*
-	 - Inherit the prototype of an object using a mixin
-			 - Can inherit multiple prototypes using mixins
-			 - If the object that is mixed in changes after its mixed in, it will have no effect on the objects that have already received the mixin *(because the mixin copies the members)*
-	 - Inherit the prototype of an object using Object.create
-		 - Can only be used once per object
-		 - If the parent class prototype is changed, then all child classes will also be changed *(because the inheritance links to the parent class members)*
- - Constructor Inhertiance
-	 - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
-		 - Can only be used once
-
-
+### Prototype Inheritance *(two methods for doing this)* ###
+##### Mixin Prototype Inheritance #####
+ - Can inherit multiple prototypes using mixins
+-  If the object that is mixed in changes after its mixed in, it will have no effect on the objects that have already received the mixin *(because the mixin copies the members)*
+##### Object.create Prototype Inheritance #####
+ - Can only be used once per object
+ - If the parent class prototype is changed, then all child classes will also be changed *(because the inheritance links to the parent class members)*
+ 
+### Constructor Inheritance ###
+ - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
+ - Can only be used once
 
 
 # Links #
