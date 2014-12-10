@@ -18,10 +18,8 @@ var className = (function() {
 
     (function Prototype() {
         if (mixins.length) OOP.mixin(this, mixins);
-
-        this.methodName = function() {
-            var sf = this;
-        };
+        
+        //this.demo = function() {var sf = this;};
     }).call(Class.prototype);
 
     (function Static() {
