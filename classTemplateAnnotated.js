@@ -106,6 +106,10 @@ var className = (function() {
         parentClass = null,
         /** optionally set this to one or more classes to mixin to this classes prototype */
         mixins = [];
+        
+    // when working inside of one of the code blocks, use the following vars:
+    // 'sf' - reference public members of the block
+    // '_sf' - reference private member of the block
 
     (function Instance() {
         Class = function(param1) {
