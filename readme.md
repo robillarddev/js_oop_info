@@ -124,9 +124,20 @@ className.methodName = function() {
 	 - [jsperf Prototype vs Non-Prototype](http://jsperf.com/prototype-vs-non-prototype/11)
  - OOP Patterns
 	 - [Classical Inheritance in Javascript (Douglas Crockford)](http://www.crockford.com/javascript/inheritance.html)
+	 - [Folding pattern](http://intrepidis.blogspot.com/2013/04/javascript-folding-pattern.html)
 	 - [StackOverflow OOP Pattern](http://stackoverflow.com/a/1114121/1571103)
  - Inheritance
 	 - [Ace Editor OOP Inheritance](https://github.com/ajaxorg/ace/blob/master/lib/ace/lib/oop.js#L34)
+		 - *(not sure where the code came from, see [this StackOverflow question](http://stackoverflow.com/questions/21369432/why-should-we-use-object-create) about the same code*
+	 - Inheritance Methods
+		 - Prototype Inheritance
+			 - Inherit the prototype of an object using a mixin
+	 			 - Can inherit multiple prototypes using mixins
+			 - Inherit the prototype of an object using Object.create
+				 - Can only be used once
+		 - Constructor Inhertiance
+			 - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
+				 - Can only be used once
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
