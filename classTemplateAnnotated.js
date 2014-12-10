@@ -141,6 +141,7 @@ var className = (function() {
                 };
             }).call(sf);
         };
+        if (parentClass) OOP.inherits(Class, parentClass);
     })();
 
     (function Prototype() {

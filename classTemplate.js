@@ -13,6 +13,7 @@ var className = (function() {
             
             (function Public() {}).call(sf);
         };
+        if (parentClass) OOP.inherits(Class, parentClass);
     })();
 
     (function Prototype() {
