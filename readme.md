@@ -34,7 +34,7 @@ function className() {
 - Can **not** be invoked from a class instance
 - Access to private members only
 - Unique to each class instance
-- *Can access prototype and public members by using an alias for this, example:*
+- *Can access prototype and public members by using an alias for `this`, example:*
 
 ```javascript
 function className() {
