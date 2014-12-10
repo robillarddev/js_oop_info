@@ -5,12 +5,12 @@ var className = (function() {
         mixins = [];
 
     (function Instance() {
-        Class = function(param1) {
+        Class = function() {
             var _sf = {}, sf = this;
             if (parentClass) parentClass.call(this /*, args*/ );
 
             (function Private() {}).call(_sf);
-
+            
             (function Public() {}).call(sf);
         };
     })();

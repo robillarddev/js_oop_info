@@ -146,6 +146,7 @@ var className = (function() {
     (function Prototype() {
         if (mixins.length) OOP.mixin(this, mixins); //mixin any mixins if set
 
+        //NOTE: I don't recommend using fields in the prototype as their scope is very confusing! see http://stackoverflow.com/questions/16751230/why-declare-properties-on-the-prototype-for-instance-variables-in-javascript/16751343#16751343
         /** prototype field */
         this.prototypeExampleField = 'prototype field; ';
         /** prototype method **/
