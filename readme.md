@@ -122,7 +122,9 @@ className.methodName = function() {
 		 - Result: Prototype is easily 100x faster. Testing creating 100 instances of my `apField` class and it took about 5ms. After changing the class and its base classes to use prototype where possible, the same 100 instances takes less than 1ms.
 	 - [Performance of Prototype vs this](http://stackoverflow.com/questions/3493252/javascript-prototype-operator-performance-saves-memory-but-is-it-faster)
 	 - [jsperf Prototype vs Non-Prototype](http://jsperf.com/prototype-vs-non-prototype/11)
- - [Classical Inheritance in Javascript (Douglas Crockford)](http://www.crockford.com/javascript/inheritance.html)
+ - OOP Patterns
+	 - [Classical Inheritance in Javascript (Douglas Crockford)](http://www.crockford.com/javascript/inheritance.html)
+	 - [StackOverflow OOP Pattern](http://stackoverflow.com/a/1114121/1571103)
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
