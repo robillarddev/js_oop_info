@@ -6,6 +6,12 @@
 - **Member**: a method or field
 - **Class**: a function intended to be reused by multiple instances by using `new`  keyword *(there are other ways to create an instance)* `function className(){ this.field=''; }`
 - **Instance**: a variable assigned to an instance of a class `var x = new className();`
+- **Access Modifiers **
+	- **Private**: member that can **not** be invoked from a class instance
+	- **Public**: member that is unique to a class instance and can be invoked from a class instance
+		- *This is commonly referred to a [privileged](http://javascript.crockford.com/private.html), but I find this term to be confusing so I avoid it*
+	- **Prototype**: member that is shared amongst all class instances and can be invoked from a class instance
+		- *This is commonly referred to a [Public](http://javascript.crockford.com/private.html), but I disagree with this naming convention*
 
 # Class Member Types #
 ## Private ##
@@ -22,7 +28,7 @@ function className() {
 - Can **not** be invoked from a class instance
 - Access to private members only
 - Unique to each class instance
-- *Can access public and privileged members by using an alias for this, example:*
+- *Can access prototype and public members by using an alias for this, example:*
 
 ```javascript
 function className() {
@@ -37,7 +43,7 @@ function className() {
 }
 ```
 
-## Privileged ##
+## Public *(AKA Privileged)* ##
 ``` javascript 
 function className() {
     //public field
@@ -49,22 +55,23 @@ function className() {
 }
 ```
 - Can be invoked from a class instance
-- Access to private, public, and privileged members
+- Access to private, prototype, and public members
 - Unique to each class instance
+- Can be deleted or replaced per instance
 
 
-## Public ##
+## Prototype *(AKA Public)* ##
 ``` javascript 
 function className() {}
-//privileged field
+//prototype field
 className.prototype.fieldName = '';
-//privileged method
+//prototype method
 className.prototype.methodName = function() {
     return this.fieldName;
 };
 ```
 - Can be invoked from a class instance
-- Access to public and privileged members
+- Access to prototype and privileged members
 - Methods are shared by all class instances *(modifying a method changes the method for all instances)*
 - Fields are shared by all class instances **AND** unique to each instance *([read this](http://stackoverflow.com/a/16751343/1571103))*
 	- *My opinion:  privileged fields should be avoided as the behaviour is very confusing*
@@ -73,7 +80,7 @@ className.prototype.methodName = function() {
 
 ``` javascript
 function className() {}
-//privileged field
+//prototype field
 className.prototype.fieldName = 'shared';
 
 var instance = new className();
@@ -102,12 +109,12 @@ className.methodName = function() {
 ```
 - Can **not** be invoked from a class instance
 	-	Invoked using the name of the class *(not the name of the instance)*
-- Access to static and public members
+- Access to static members  *( and prototype but not in the typical sense... research more)*
 - Shared by all class instances and globally as this is a singleton pattern *(modifying a method changes the method globally)*
 
 
 # Links #
- - [Naming of Public, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
+ - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
  - [Using this vs prototype](http://stackoverflow.com/a/310914/1571103)
  - [Basic Inheritance](http://stackoverflow.com/a/10430875/1571103)
  - Performance
