@@ -1,24 +1,19 @@
 var className = (function() {
     // template info: https://github.com/sevin7676/js_oop_info/blob/master/classTemplateAnnotated.js
-    var Class, local = this,
+    var local = this,
         parentClass = null,
         mixins = [];
 
-    (function Instance() {
-        Class = function() {
-            var _sf = {}, sf = this;
-            if (parentClass) parentClass.call(this /*, args*/ );
+    var Class = function() {
+        var _sf = {}, sf = this;
+        if (parentClass) parentClass.call(this /*, args*/ );
 
-            (function Private() {}).call(_sf);
-            
-            (function Public() {}).call(sf);
-        };
-    })();
+        (function Private() {}).call(_sf);
+
+        (function Public() {}).call(sf);
+    };
 
     (function Prototype() {
-        if (parentClass) microMixin(this, parentClass.prototype);
-        if (mixins.length) microMixin(this, mixins);
-
         //this.demo = function() {var sf = this;};
     }).call(Class.prototype);
 
@@ -31,5 +26,6 @@ var className = (function() {
         (function Public() {}).call(Class);
     })();
 
+    microMixin(Class.prototype, mixins, parentClass);
     return Class;
 }());

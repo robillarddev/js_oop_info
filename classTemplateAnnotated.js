@@ -36,20 +36,29 @@
 /**
  * Performs a mixin with the passed objects.
  * Mixin can be used many times on a single object.
- * @param {object} obj - object to receive the mixin
- * @param {object|array<object>} mixins - object(s) to mixin to the passed proto
+ * @param {object} obj - object to receive the mixin.
+ * @param {object|array<object>} mixins - object(s) to mixin.
+ *      Null/Undefined objects are ignored.
+ * @param {object|array<object>} protoMixins - object(s) to mixin by calling [object].prototype on each item.
+ *      Null/Undefined objects are ignored.
  * @returns {object} passed object
  * @example
  *
  *      var class = function(){};
- *      (function() {
- *          microMixin(this, [objectToMixin]);
- *      }).call(class.prototype);
+ *      microMixin(class.prototype, [class1.prototype], [class2]);
  */
-var microMixin = function(obj, mixins) {
+var microMixin = function(obj, mixins, protoMixins) {
     if (!Array.isArray(mixins)) mixins = [mixins];
+    if (!Array.isArray(protoMixins)) protoMixins = [protoMixins];
+    for (var n = 0; n < protoMixins.length; n++) {
+        var p = protoMixins[n];
+        if (p == null) continue;
+        mixins.push(p.prototype);
+    }
+    
     for (var i = 0; i < mixins.length; i++) {
         var m = mixins[i];
+        log('mixins', mixins, 'this', m);
         if (m == null) continue;
         for (var key in m) {
             obj[key] = m[key];
@@ -65,53 +74,51 @@ var microMixin = function(obj, mixins) {
 var className = (function() {
     /** local scope, used for private static vars */
     var local = this,
-        /** object that holds the class in local scope, is upper case becase 'class' is reserved in ES6  */
-        Class,
         /** optionally set this to a parent class to inherit prototype and constructor from */
         parentClass = null,
         /** optionally set this to one or more classes to mixin to this classes prototype */
         mixins = [];
-        
+
     // when working inside of one of the code blocks, use the following vars:
     // 'sf' - reference public members of the block
     // '_sf' - reference private member of the block
 
-    (function Instance() {
-        Class = function(param1) {
-            var _sf = {}, sf = this;
-            if (parentClass) parentClass.call(this /*optionally pass args*/ ); //inherit the constructor of parent class if specified
+    /**
+     * Class represents the class in this scope.
+     * It starts with an upper case 'C' becase 'class' is reserved in ES6.
+     * Members defined inside of class are unique to each class instance.
+     */
+    var Class = function(param1) {
+        var _sf = {}, sf = this;
+        if (parentClass) parentClass.call(this /*optionally pass args*/ ); //inherit the constructor of parent class if specified
 
-            (function Private() {
-                /** private field */
-                this.privateExampleField = 'private field; ';
-                /** private method */
-                this.privateExampleMethod = function() {
-                    // use '_sf' to access private members
-                    // use 'sf' to access public and prototype members
-                    return 'private instance members can access private, public, and prototype members. \n\n' + _sf.privateExampleField + sf.publicExampleField + sf.prototypeExampleField + '\n\n (private can only access public and prototype because we are using an alias for \'this\', because \'this\' inside of a private member refers to the global scope) ';
-                };
+        (function Private() {
+            /** private field */
+            this.privateExampleField = 'private field; ';
+            /** private method */
+            this.privateExampleMethod = function() {
+                // use '_sf' to access private members
+                // use 'sf' to access public and prototype members
+                return 'private instance members can access private, public, and prototype members. \n\n' + _sf.privateExampleField + sf.publicExampleField + sf.prototypeExampleField + '\n\n (private can only access public and prototype because we are using an alias for \'this\', because \'this\' inside of a private member refers to the global scope) ';
+            };
 
-            }).call(_sf);
+        }).call(_sf);
 
-            (function Public() {
-                /** public field, example of how to work with parameters on the constructor*/
-                this.param1 = param1;
-                /** public field */
-                this.publicExampleField = 'public field; ';
-                /** public method **/
-                this.publicExampleMethod = function() {
-                    // use '_sf' to access private members
-                    // use 'sf' to access public and prototype members
-                    return 'public instance members can access private, public, and prototype members\n\n' + _sf.privateExampleMethod();
-                };
-            }).call(sf);
-        };
-    })();
+        (function Public() {
+            /** public field, example of how to work with parameters on the constructor*/
+            this.param1 = param1;
+            /** public field */
+            this.publicExampleField = 'public field; ';
+            /** public method **/
+            this.publicExampleMethod = function() {
+                // use '_sf' to access private members
+                // use 'sf' to access public and prototype members
+                return 'public instance members can access private, public, and prototype members\n\n' + _sf.privateExampleMethod();
+            };
+        }).call(sf);
+    };
 
     (function Prototype() {
-        if (parentClass) microMixin(this, parentClass.prototype);//mixin parent prototype if set
-        if (mixins.length) microMixin(this, mixins); //mixin any mixins if set
-
         //NOTE: I don't recommend using fields in the prototype as their scope is very confusing! see http://stackoverflow.com/questions/16751230/why-declare-properties-on-the-prototype-for-instance-variables-in-javascript/16751343#16751343
         /** prototype field */
         this.prototypeExampleField = 'prototype field; ';
@@ -129,7 +136,8 @@ var className = (function() {
     }).call(Class.prototype);
 
     (function Static() {
-        var _sf = local, sf = Class;
+        var _sf = local,
+            sf = Class;
         (function Private() {
             /** private static field */
             this.privateStaticExampleField = 'private static; ';
@@ -153,6 +161,7 @@ var className = (function() {
         }).call(Class);
     })();
 
+    microMixin(Class.prototype, mixins, parentClass);
     return Class;
 }());
 
