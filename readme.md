@@ -114,9 +114,35 @@ className.methodName = function() {
 
 #Inheritance#
 
+##Constructor Inheritance##
+ - Inherit the class constructor (public instance members)
+ - Can only be done once per class
+ - Performance is slow because all parent class members are copied to the child class
+ 
+``` javascript
+function baseClassName(param1) {
+    var fieldName = param1;
+    this.methodName = function() {
+        return fieldName;
+    };
+}
+
+function childClassName(param1) {
+    baseClassName.call(this, param1); //params are optional
+    this.childMethodName = function() {
+        return this.methodName(); //call inherited method
+    };
+    
+    //private members from parent are not accessible, so the code below is wrong:
+    //result: childFieldName= undefined
+    var childFieldName = fieldName;
+}
+```
+ 
+
 ##Prototype Inheritance##
 
-##Constructor Inheritance##
+
 
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
