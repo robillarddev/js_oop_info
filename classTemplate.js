@@ -7,9 +7,7 @@ var className = (function() {
     var Class = function() {
         var _sf = {}, sf = this;
         if (parentClass) parentClass.call(this /*, args*/ );
-
         (function Private() {}).call(_sf);
-
         (function Public() {}).call(sf);
     };
 
@@ -20,9 +18,7 @@ var className = (function() {
     (function Static() {
         var _sf = local,
             sf = Class;
-
         (function Private() {}).call(local);
-
         (function Public() {}).call(Class);
     })();
 
