@@ -12,7 +12,7 @@
  *      var class = function(){};
  *      microMixin(class.prototype, [class1.prototype], [class2]);
  */
-var microMixin = function(obj, mixins, protoMixins) {
+function microMixin(obj, mixins, protoMixins) {
     if (!Array.isArray(mixins)) mixins = [mixins];
     if (!Array.isArray(protoMixins)) protoMixins = [protoMixins];
     for (var n = 0; n < protoMixins.length; n++) {
