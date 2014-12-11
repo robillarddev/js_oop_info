@@ -112,6 +112,11 @@ className.methodName = function() {
 - Access to static members  *( and prototype but not in the typical sense... research more)*
 - Shared by all class instances and globally as this is a singleton pattern *(modifying a method changes the method globally)*
 
+#Inheritance#
+
+##Prototype Inheritance##
+
+##Constructor Inheritance##
 
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
