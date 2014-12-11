@@ -1,10 +1,4 @@
-# Javascript OOP#
-
-## Files ##
-- [Class Template](https://github.com/sevin7676/js_oop_info/blob/master/classTemplate.js)
-- [Annotated Class Template](https://github.com/sevin7676/js_oop_info/blob/master/classTemplateAnnotated.js) *(with build in tests)*
-- [Minimal inheritance library](https://github.com/sevin7676/js_oop_info/blob/master/inheritanceLib.js) *(required for using template)*
-
+# Javascript OOP Basics *(No Inheritance)*#
 
 ## Terminology ##
 - **Field:** a variable that is not a function `var x = 1;`
@@ -12,7 +6,7 @@
 - **Member**: a method or field
 - **Class**: a function intended to be reused by multiple instances by using `new`  keyword *(there are other ways to create an instance)* `function className(){ this.field=''; }`
 - **Instance**: a variable assigned to an instance of a class `var x = new className();`
-- **Access Modifiers**
+- **Access Modifiers **
 	- **Private**: member that can **not** be invoked from a class instance
 	- **Public**: member that is unique to a class instance and can be invoked from a class instance
 		- *This is commonly referred to a [privileged](http://javascript.crockford.com/private.html), but I find this term to be confusing so I avoid it*
@@ -34,7 +28,7 @@ function className() {
 - Can **not** be invoked from a class instance
 - Access to private members only
 - Unique to each class instance
-- *Can access prototype and public members by using an alias for `this`, example:*
+- *Can access prototype and public members by using an alias for this, example:*
 
 ```javascript
 function className() {
@@ -119,23 +113,6 @@ className.methodName = function() {
 - Shared by all class instances and globally as this is a singleton pattern *(modifying a method changes the method globally)*
 
 
-
-# Inheritance#
-### Prototype Inheritance *(two methods for doing this)* ###
-##### Mixin Prototype Inheritance #####
- - Can inherit multiple prototypes using mixins
--  If the object that is mixed in changes after its mixed in, it will have no effect on the objects that have already received the mixin *(because the mixin copies the members)*
-
-
-##### Object.create Prototype Inheritance #####
- - Can only be used once per object
- - If the parent class prototype is changed, then all child classes will also be changed *(because the inheritance links to the parent class members)*
- 
-### Constructor Inheritance *(Instance  members)*###
- - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
- - Can only be used once
-
-
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
  - [Using this vs prototype](http://stackoverflow.com/a/310914/1571103)
@@ -150,7 +127,18 @@ className.methodName = function() {
 	 - [Folding pattern](http://intrepidis.blogspot.com/2013/04/javascript-folding-pattern.html)
 	 - [StackOverflow OOP Pattern](http://stackoverflow.com/a/1114121/1571103)
  - Inheritance
-	 - [Ace Editor OOP Inheritance](https://github.com/ajaxorg/ace/blob/master/lib/ace/lib/oop.js#L34) *(not sure where the code came from, see [this StackOverflow question](http://stackoverflow.com/questions/21369432/why-should-we-use-object-create) about the same code*
+	 - [Ace Editor OOP Inheritance](https://github.com/ajaxorg/ace/blob/master/lib/ace/lib/oop.js#L34)
+		 - *(not sure where the code came from, see [this StackOverflow question](http://stackoverflow.com/questions/21369432/why-should-we-use-object-create) about the same code*
+	 - Inheritance Methods
+		 - Prototype Inheritance
+			 - Inherit the prototype of an object using a mixin
+	 			 - Can inherit multiple prototypes using mixins
+			 - Inherit the prototype of an object using Object.create
+				 - Can only be used once
+		 - Constructor Inhertiance
+			 - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
+				 - Can only be used once
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
+- [ ] Add information about inheritance
