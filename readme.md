@@ -205,6 +205,13 @@ for (var key in baseClassName.prototype) {
 - Works exactly the same as Prototype Inheritance (can use linking or copying)
 	- Use `baseClassName` instead of `baseClassName.prototype` and `childClassName` instead of `childClassName.prototype` in the Prototype Inheritance examples
 
+##Combining Inheritance##
+
+- A single class can inherit any combination of  Constructor, Prototype, and Static Members from another class.
+- A single class may inherit Prototype and Static Members from an unlimited number of classes when using the copy inheritance method
+
+
+
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
  - [Using this vs prototype](http://stackoverflow.com/a/310914/1571103)
