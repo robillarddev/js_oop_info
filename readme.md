@@ -141,7 +141,64 @@ function childClassName(param1) {
  
 
 ##Prototype Inheritance##
+- Inherits the prototype members *(prototype members are always public)*
 
+#### Linking to Parent Prototype ####
+- Can only be done once per class
+- Changing the prototype of a class whose prototype has been inherited will affect all child classes
+- Performance is excellent because the child class simply references the parent class prototype
+
+``` javascript
+function baseClassName() {}
+baseClassName.prototype.methodName = function() {
+    return 'baseClass';
+};
+
+function childClassName() {}
+//the preferred mehod (requires es5):
+childClassName.prototype = Object.create(baseClassName.prototype, {
+    constructor: {
+        value: childClassName,
+        writable: true,
+        configurable: true
+    }
+});
+
+//another way to write the inheritance portion:
+childClassName.prototype = baseClassName.prototype;
+//however, doing this can cause issues (I'm not sure exactly what the issues are)
+//The correct way to use this method is:
+var tempCtor = function() {};
+tempCtor.prototype = baseClassName.prototype;
+childClassName.prototype = new tempCtor();
+childClassName.prototype.constructor = childClassName;
+
+```
+
+#### Copying the Parent Prototype ####
+
+- Commonly referred to as a `Mixin`
+- Can be done multiple times per class
+- Performance is not as good as linking because this creates a copy of each member
+- Changing the prototype of the a class whose prototype has been inherited using this method will have no affect on child classes
+	- [More about Mixins](http://peter.michaux.ca/articles/mixins-and-constructor-functions)
+
+```javascript
+function baseClassName() {}
+baseClassName.prototype.methodName = function() {
+    return 'baseClass';
+};
+function childClassName() {}
+childClassName.prototype.methodName = baseClassName.prototype.methodName;
+
+//the above method can simpliefied into a 'mixin' function that will
+//copy all of the prototype members
+for (var key in baseClassName.prototype) {
+    //optionally add: if(baseClassName.prototype.hasOwnProperty(key))
+    //this will prevent any mixed members from baseClassName from getting copied
+    childClassName.prototype[key] = baseClassName.prototype[key];
+}
+```
 
 
 # Links #
