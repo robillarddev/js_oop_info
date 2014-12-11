@@ -200,6 +200,10 @@ for (var key in baseClassName.prototype) {
 }
 ```
 
+##Static Inheritance##
+- Inherits the public static members
+- Works exactly the same as Prototype Inheritance (can use linking or copying)
+	- Use `baseClassName` instead of `baseClassName.prototype` and `childClassName` instead of `childClassName.prototype` in the Prototype Inheritance examples
 
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
