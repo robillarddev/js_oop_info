@@ -146,7 +146,13 @@ className.methodName = function() {
 	- Can mixin by simply using `className`
 	- `this` in the static methods will refer to `this` in the child class *(this may be slightly confusing when writing the mixin class in this notation)*
 
+#Class Template#
+- This repo includes templates
 
+## Mixin Class Template ##
+- Use the class template, and use the prototype members
+- Private static members can also be used
+- Don't use public static members (it would allow for excluding `.prototype` when doing the mixin, but it causes confusion as the meaning `sf` is inconsistent with normal class static members
 
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
