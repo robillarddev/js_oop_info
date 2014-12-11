@@ -147,6 +147,10 @@ var className = (function() {
                 // use 'sf' to access public static
                 return 'private static members can access public static and private static members. \n\n' + sf.publicStaticExampleField + '\n\n(private static members can be accessed locally in the entire class block by their name without any type prefix)';
             };
+            //NOTE: if definig static members for a class that will be used as a mixin,
+            //      then you will want to add 'var sf = this;' to the first line of each mixin function
+            //      if the function needs to access the class instance members as the 'sf' in this scope by default
+            //      is a reference to the static members of the class
         }).call(local);
 
         (function Public() {
