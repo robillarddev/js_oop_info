@@ -23,11 +23,10 @@ function microMixin(obj, mixins, protoMixins) {
     
     for (var i = 0; i < mixins.length; i++) {
         var m = mixins[i];
-        log('mixins', mixins, 'this', m);
         if (m == null) continue;
         for (var key in m) {
             obj[key] = m[key];
         }
     }
     return obj;
-};
+}
