@@ -135,6 +135,18 @@ className.methodName = function() {
  - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
  - Can only be used once
 
+#Mixin Class#
+- A class whose purpose is to have its members mixed into another class
+- The members can be written several different ways:
+1. Using public instance members in the constructor, but this is **NOT** recommended as it would require the inheritance to create a new instance for the mixin resulting in unpredictable `this` behavior
+2. Using prototype members
+	- Will have to write out `className.prototype` to mixin from the class
+	- `this` in the prototype methods will refer to `this` in the child class *(this is how prototype always works, so its expected)*
+3. Using static members
+	- Can mixin by simply using `className`
+	- `this` in the static methods will refer to `this` in the child class *(this may be slightly confusing when writing the mixin class in this notation)*
+
+
 
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
@@ -154,3 +166,4 @@ className.methodName = function() {
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
+
