@@ -142,7 +142,7 @@ className.methodName = function() {
 2. Using prototype members
 	- Will have to write out `className.prototype` to mixin from the class
 	- `this` in the prototype methods will refer to `this` in the child class *(this is how prototype always works, so its expected)*
-3. Using static members
+3. Using public static members
 	- Can mixin by simply using `className`
 	- `this` in the static methods will refer to `this` in the child class *(this may be slightly confusing when writing the mixin class in this notation)*
 
