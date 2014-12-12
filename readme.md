@@ -7,11 +7,46 @@
 - **Class**: a function intended to be reused by multiple instances by using `new`  keyword *(there are other ways to create an instance)* `function className(){ this.field=''; }`
 - **Instance**: a variable assigned to an instance of a class `var x = new className();`
 - **Access Modifiers **
+	- *Javascript does not have access modifier keywords, instead the access level of a member is determined by the way the code is laid out. The class template in this repository shows how to lay out members to achieve the access levels listed below*
 	- **Private**: member that can **not** be invoked from a class instance
 	- **Public**: member that is unique to a class instance and can be invoked from a class instance
 		- *This is commonly referred to a [privileged](http://javascript.crockford.com/private.html), but I find this term to be confusing so I avoid it*
 	- **Prototype**: member that is shared amongst all class instances and can be invoked from a class instance
 		- *This is commonly referred to a [Public](http://javascript.crockford.com/private.html), but I disagree with this naming convention*
+- **Constructor**:  The function that defines an object
+	- A [Javascript constructor](http://zeekat.nl/articles/constructors-considered-mildly-confusing.html) is **not** the same as a constructor in C#, Java, etc..
+	- In most languages a constructor is a method that is used to create an object and initialize the state of the object:
+	
+```c#
+class className
+{
+	//a constructor in C#
+    public className(string param1)
+    {
+		//some code that is used to initialize the class
+    }
+}
+```
+
+- In Javascript a constructor is simply a function with a name:
+
+``` javascript
+function className(){}//this is a 'consructor' in javascript
+var instance = new className();
+console.log(instance.constructor);//result: function className(){}
+console.log(instance.constructor.name);//result: className
+```
+- A C#/Java like constructor can be implemented by simply executing a function inside of the constructor *(more than one function can be executed if desired)*
+```javascript
+function classNameWithParams(param1){
+    this.param1 = param1;//a constructor can accept parameters
+    this.testMethod = function(){
+        console.log('param1: '+ this.param1);
+    };
+    this.testMethod();//a constructor can invoke methods, make sure that the invocation of the method is below the definition of all used members
+}
+var instance = new classNameWithParams('param1 value');//logs: param1: param1 value
+```
 
 # Class Member Types #
 ## Private ##
@@ -178,7 +213,7 @@ new childClassName().methodName();
 ##Prototype Inheritance##
 - Inherits the prototype members *(prototype members are always public)*
 
-#### Linking to Parent Prototype ####
+### Linking to Parent Prototype ###
 - Can only be done once per class
 - Changing the prototype of a class whose prototype has been inherited will affect all child classes
 - Performance is excellent because the child class simply references the parent class prototype
@@ -210,7 +245,7 @@ childClassName.prototype.constructor = childClassName;
 
 ```
 
-#### Copying the Parent Prototype ####
+### Copying the Parent Prototype ###
 
 - Commonly referred to as a `Mixin`
 - Can be done multiple times per class
