@@ -1,10 +1,4 @@
-# Javascript OOP#
-
-## Files ##
-- [Class Template](https://github.com/sevin7676/js_oop_info/blob/master/classTemplate.js)
-- [Annotated Class Template](https://github.com/sevin7676/js_oop_info/blob/master/classTemplateAnnotated.js) *(with build in tests)*
-- [Minimal inheritance library](https://github.com/sevin7676/js_oop_info/blob/master/inheritanceLib.js) *(required for using template)*
-
+# Javascript OOP Basics *(No Inheritance)*#
 
 ## Terminology ##
 - **Field:** a variable that is not a function `var x = 1;`
@@ -12,7 +6,7 @@
 - **Member**: a method or field
 - **Class**: a function intended to be reused by multiple instances by using `new`  keyword *(there are other ways to create an instance)* `function className(){ this.field=''; }`
 - **Instance**: a variable assigned to an instance of a class `var x = new className();`
-- **Access Modifiers**
+- **Access Modifiers **
 	- **Private**: member that can **not** be invoked from a class instance
 	- **Public**: member that is unique to a class instance and can be invoked from a class instance
 		- *This is commonly referred to a [privileged](http://javascript.crockford.com/private.html), but I find this term to be confusing so I avoid it*
@@ -34,7 +28,7 @@ function className() {
 - Can **not** be invoked from a class instance
 - Access to private members only
 - Unique to each class instance
-- *Can access prototype and public members by using an alias for `this`, example:*
+- *Can access prototype and public members by using an alias for this, example:*
 
 ```javascript
 function className() {
@@ -118,41 +112,105 @@ className.methodName = function() {
 - Access to static members  *( and prototype but not in the typical sense... research more)*
 - Shared by all class instances and globally as this is a singleton pattern *(modifying a method changes the method globally)*
 
+#Inheritance#
 
-
-# Inheritance#
-### Prototype Inheritance *(two methods for doing this)* ###
-##### Mixin Prototype Inheritance #####
- - Can inherit multiple prototypes using mixins
--  If the object that is mixed in changes after its mixed in, it will have no effect on the objects that have already received the mixin *(because the mixin copies the members)*
-
-
-##### Object.create Prototype Inheritance #####
- - Can only be used once per object
- - If the parent class prototype is changed, then all child classes will also be changed *(because the inheritance links to the parent class members)*
+##Constructor Inheritance##
+ - Inherit the class constructor (public instance members)
+ - Can only be done once per class
+ - Performance is slow because all parent class members are copied to the child class
  
-### Constructor Inheritance *(Instance  members)*###
- - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
- - Can only be used once
+``` javascript
+function baseClassName(param1) {
+    var fieldName = param1;
+    this.methodName = function() {
+        return fieldName;
+    };
+}
 
-#Mixin Class#
-- A class whose purpose is to have its members mixed into another class
-- The members can be written several different ways:
-1. Using public instance members in the constructor, but this is **NOT** recommended as it would require the inheritance to create a new instance for the mixin resulting in unpredictable `this` behavior
-2. Using prototype members
-	- Will have to write out `className.prototype` to mixin from the class
-	- `this` in the prototype methods will refer to `this` in the child class *(this is how prototype always works, so its expected)*
-3. Using public static members
-	- Can mixin by simply using `className`
-	- `this` in the static methods will refer to `this` in the child class *(this may be slightly confusing when writing the mixin class in this notation)*
+function childClassName(param1) {
+    baseClassName.call(this, param1); //params are optional
+    this.childMethodName = function() {
+        return this.methodName(); //call inherited method
+    };
+    
+    //private members from parent are not accessible, so the code below is wrong:
+    //result: childFieldName= undefined
+    var childFieldName = fieldName;
+}
+```
+ 
 
-#Class Template#
-- This repo includes templates
+##Prototype Inheritance##
+- Inherits the prototype members *(prototype members are always public)*
 
-## Mixin Class Template ##
-- Use the class template, and use the prototype members
-- Private static members can also be used
-- Don't use public static members (it would allow for excluding `.prototype` when doing the mixin, but it causes confusion as the meaning `sf` is inconsistent with normal class static members
+#### Linking to Parent Prototype ####
+- Can only be done once per class
+- Changing the prototype of a class whose prototype has been inherited will affect all child classes
+- Performance is excellent because the child class simply references the parent class prototype
+
+``` javascript
+function baseClassName() {}
+baseClassName.prototype.methodName = function() {
+    return 'baseClass';
+};
+
+function childClassName() {}
+//the preferred mehod (requires es5):
+childClassName.prototype = Object.create(baseClassName.prototype, {
+    constructor: {
+        value: childClassName,
+        writable: true,
+        configurable: true
+    }
+});
+
+//another way to write the inheritance portion:
+childClassName.prototype = baseClassName.prototype;
+//however, doing this can cause issues (I'm not sure exactly what the issues are)
+//The correct way to use this method is:
+var tempCtor = function() {};
+tempCtor.prototype = baseClassName.prototype;
+childClassName.prototype = new tempCtor();
+childClassName.prototype.constructor = childClassName;
+
+```
+
+#### Copying the Parent Prototype ####
+
+- Commonly referred to as a `Mixin`
+- Can be done multiple times per class
+- Performance is not as good as linking because this creates a copy of each member
+- Changing the prototype of the a class whose prototype has been inherited using this method will have no affect on child classes
+	- [More about Mixins](http://peter.michaux.ca/articles/mixins-and-constructor-functions)
+
+```javascript
+function baseClassName() {}
+baseClassName.prototype.methodName = function() {
+    return 'baseClass';
+};
+function childClassName() {}
+childClassName.prototype.methodName = baseClassName.prototype.methodName;
+
+//the above method can simpliefied into a 'mixin' function that will
+//copy all of the prototype members
+for (var key in baseClassName.prototype) {
+    //optionally add: if(baseClassName.prototype.hasOwnProperty(key))
+    //this will prevent any mixed members from baseClassName from getting copied
+    childClassName.prototype[key] = baseClassName.prototype[key];
+}
+```
+
+##Static Inheritance##
+- Inherits the public static members
+- Works exactly the same as Prototype Inheritance (can use linking or copying)
+	- Use `baseClassName` instead of `baseClassName.prototype` and `childClassName` instead of `childClassName.prototype` in the Prototype Inheritance examples
+
+##Combining Inheritance##
+
+- A single class can inherit any combination of  Constructor, Prototype, and Static Members from another class.
+- A single class may inherit Prototype and Static Members from an unlimited number of classes when using the copy inheritance method
+
+
 
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
@@ -168,8 +226,18 @@ className.methodName = function() {
 	 - [Folding pattern](http://intrepidis.blogspot.com/2013/04/javascript-folding-pattern.html)
 	 - [StackOverflow OOP Pattern](http://stackoverflow.com/a/1114121/1571103)
  - Inheritance
-	 - [Ace Editor OOP Inheritance](https://github.com/ajaxorg/ace/blob/master/lib/ace/lib/oop.js#L34) *(not sure where the code came from, see [this StackOverflow question](http://stackoverflow.com/questions/21369432/why-should-we-use-object-create) about the same code*
+	 - [Ace Editor OOP Inheritance](https://github.com/ajaxorg/ace/blob/master/lib/ace/lib/oop.js#L34)
+		 - *(not sure where the code came from, see [this StackOverflow question](http://stackoverflow.com/questions/21369432/why-should-we-use-object-create) about the same code*
+	 - Inheritance Methods
+		 - Prototype Inheritance
+			 - Inherit the prototype of an object using a mixin
+	 			 - Can inherit multiple prototypes using mixins
+			 - Inherit the prototype of an object using Object.create
+				 - Can only be used once
+		 - Constructor Inhertiance
+			 - Inherit the constructor using `[parentClass].call(this, [arguments] )` inside of the constructor
+				 - Can only be used once
 
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
-
+- [ ] Add information about inheritance
