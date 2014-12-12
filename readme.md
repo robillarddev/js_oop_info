@@ -282,6 +282,17 @@ for (var key in baseClassName.prototype) {
 - A single class may inherit Prototype and Static Members from an unlimited number of classes when using the copy inheritance method
 
 
+#Class Template#
+*This repo includes templates*
+
+##Creating Mixin Classes Using the Template##
+
+ - A *Mixin Class* is a class whose sole purpose is to be mixed in with other classes
+ - Use the class template, and use the prototype members
+ - Private static members can also be used 
+ - Don't use public static members (it would allow for excluding .prototype when doing the mixin, but it causes
+   confusion as about the meaning  of `sf` as its is inconsistent with normal class static members
+ - Be aware that the mixin class can't define public members, so using public members requires adding them to the class dynamically
 
 # Links #
  - [Naming of Prototype, Private, Privileged, and Static ](http://stackoverflow.com/a/12439637/1571103)
