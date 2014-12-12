@@ -29,4 +29,8 @@ function microMixin(obj, mixins, protoMixins) {
         }
     }
     return obj;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master
