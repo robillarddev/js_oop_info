@@ -20,7 +20,7 @@ function microMixin(obj, mixins, protoMixins) {
         if (p == null) continue;
         mixins.push(p.prototype);
     }
-    
+
     for (var i = 0; i < mixins.length; i++) {
         var m = mixins[i];
         if (m == null) continue;
@@ -29,8 +29,4 @@ function microMixin(obj, mixins, protoMixins) {
         }
     }
     return obj;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master
