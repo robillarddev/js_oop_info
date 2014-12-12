@@ -1,4 +1,4 @@
-# Javascript OOP Basics *(No Inheritance)*#
+# Javascript OOP Basics #
 
 ## Terminology ##
 - **Field:** a variable that is not a function `var x = 1;`
