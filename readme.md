@@ -274,7 +274,7 @@ for (var key in baseClassName.prototype) {
 ##Static Inheritance##
 - Inherits the public static members
 - Works exactly the same as Prototype Inheritance (can use linking or copying)
-	- Use `baseClassName` instead of `baseClassName.prototype` and `childClassName` instead of `childClassName.prototype` in the Prototype Inheritance examples
+	- Use `baseClassName` instead of `baseClassName.prototype` in the prototype Inheritance examples *(this will copy the static `baseClassName` members  to `childClassName.prototype`. It is also possible to copy the `baseClassName` members to the static members the child class by simply using `childClassName` for the mixin)*.
 
 ##Combining Inheritance##
 
