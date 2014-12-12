@@ -307,7 +307,7 @@ f2();// Pass
 function className(){}
 ```
 - Ordering of code does not matter
-	- *I prefer this method because I don't want the order of code to matter for my classes!*
+	- *I prefer this method because I don't want the order of code to matter for my classes, however the templates in this repo can't use this method*
 - Not allowed to appear inside of block statements such as `if`, `while`, `for`
 	- *Currently this is only enforced in strict mode, but expect it to be standard soon*
 
