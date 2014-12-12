@@ -115,6 +115,7 @@ className.methodName = function() {
 #Inheritance#
 
 ##Constructor Inheritance##
+
  - Inherit the class constructor (public instance members)
  - Can only be done once per class
  - Performance is slow because all parent class members are copied to the child class
@@ -137,6 +138,40 @@ function childClassName(param1) {
     //result: childFieldName= undefined
     var childFieldName = fieldName;
 }
+```
+
+ - It is also possible to mixin the parent constructor, however this does **NOT** work properly, this example is to show why you should **NOT** do this
+ 
+``` javascript
+//DO NOT DO THIS
+function baseClassName() {
+    var self = this;
+    this.baseField = 'base field';
+    this.methodName = function() {
+        console.log('baseField=' + this.baseField);
+        console.log('childField=' + this.childField);
+        console.log('self.constructor.name=' + self.constructor.name);
+        console.log('this.constructor.name=' + this.constructor.name);
+    };
+}
+function childClassName() {
+    this.childField = 'child field';
+}
+childClassName.prototype.methodName = new baseClassName().methodName;
+/*(could also do a mixin of all members)
+var temp = new baseClassName();
+for (var key in temp) {
+    childClassName.prototype[key] = temp[key];
+}*/
+
+new childClassName().methodName();
+// result:
+// baseField=undefined
+// childField=child field
+// self.constructor.name=baseClassName
+// this.constructor.name=childClassName
+
+//'this' in base class is now a reference to 'this' of child class, which is why you should NOT use this method for ineheritance!
 ```
  
 
