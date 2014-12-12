@@ -235,8 +235,9 @@ childClassName.prototype = Object.create(baseClassName.prototype, {
 });
 
 //another way to write the inheritance portion:
-childClassName.prototype = baseClassName.prototype;
-//however, doing this can cause issues (I'm not sure exactly what the issues are)
+childClassName.prototype = baseClassName.prototype;//BAD
+//however, doing this is bad because it will mess up the constructor reference
+
 //The correct way to use this method is:
 var tempCtor = function() {};
 tempCtor.prototype = baseClassName.prototype;
