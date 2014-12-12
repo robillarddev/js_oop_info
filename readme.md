@@ -281,6 +281,39 @@ for (var key in baseClassName.prototype) {
 - A single class can inherit any combination of  Constructor, Prototype, and Static Members from another class.
 - A single class may inherit Prototype and Static Members from an unlimited number of classes when using the copy inheritance method
 
+#Methods for Writing a Class#
+
+##Links##
+- [Performance Comparison](http://jsperf.com/closure-function-declaration-vs-function-expression/3)
+- [Long explanation](http://stackoverflow.com/questions/336859/var-functionname-function-vs-function-functionname)
+
+
+##Named Function Expression##
+```javascript
+var className = function(){}
+```
+- Ordering of the code matters
+```javascript
+f1();// Error
+var f1 = function() {};
+
+var f2 = function() {};
+f2();// Pass
+```
+
+
+##Function Declaration##
+```javascript
+function className(){}
+```
+- Ordering of code does not matter
+	- *I prefer this method because I don't want the order of code to matter for my classes!*
+- Not allowed to appear inside of block statements such as `if`, `while`, `for`
+	- *Currently this is only enforced in strict mode, but expect it to be standard soon*
+
+
+
+
 
 #Class Template#
 *This repo includes templates*
