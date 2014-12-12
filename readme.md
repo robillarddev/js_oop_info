@@ -6,7 +6,7 @@
 - **Member**: a method or field
 - **Class**: a function intended to be reused by multiple instances by using `new`  keyword *(there are other ways to create an instance)* `function className(){ this.field=''; }`
 - **Instance**: a variable assigned to an instance of a class `var x = new className();`
-- **Access Modifiers **
+- **Access Modifiers**
 	- *Javascript does not have access modifier keywords, instead the access level of a member is determined by the way the code is laid out. The class template in this repository shows how to lay out members to achieve the access levels listed below*
 	- **Private**: member that can **not** be invoked from a class instance
 	- **Public**: member that is unique to a class instance and can be invoked from a class instance
