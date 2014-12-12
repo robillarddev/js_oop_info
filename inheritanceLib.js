@@ -12,7 +12,7 @@
  *      var class = function(){};
  *      microMixin(class.prototype, [class1.prototype], [class2]);
  */
-var microMixin = function(obj, mixins, protoMixins) {
+function microMixin(obj, mixins, protoMixins) {
     if (!Array.isArray(mixins)) mixins = [mixins];
     if (!Array.isArray(protoMixins)) protoMixins = [protoMixins];
     for (var n = 0; n < protoMixins.length; n++) {
@@ -23,11 +23,10 @@ var microMixin = function(obj, mixins, protoMixins) {
     
     for (var i = 0; i < mixins.length; i++) {
         var m = mixins[i];
-        log('mixins', mixins, 'this', m);
         if (m == null) continue;
         for (var key in m) {
             obj[key] = m[key];
         }
     }
     return obj;
-};
+}

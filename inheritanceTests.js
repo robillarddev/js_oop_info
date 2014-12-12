@@ -120,9 +120,11 @@ var baseConstructor = (function() {
             (function Private() {}).call(_sf);
 
             (function Public() {
+                this.baseField='hello from base';
                 /** base method */
                 this.baseMethod = function() {
-                    return 'hello from base';
+                    return sf.baseField;
+                    return this.baseField;
                 };
             }).call(sf);
         };
@@ -140,7 +142,7 @@ var inheritConstructor = (function() {
     // template info: https://github.com/sevin7676/js_oop_info/blob/master/classTemplateAnnotated.js
     var Class, local = this,
         parentClass = null,
-        mixins = [baseConstructor];
+        mixins = [new baseConstructor()];
 
     (function Instance() {
         Class = function() {
@@ -264,3 +266,52 @@ var className = (function() {
     microMixin(Class.prototype, mixins.push(parentClass));
     return Class;
 }());
+
+
+
+
+function baseClassName() {
+    var self = this;
+    this.baseField = 'base field';
+    this.methodName = function() {
+        console.log('baseField=' + this.baseField);
+        console.log('childField=' + this.childField);
+        console.log('self.constructor.name=' + self.constructor.name);
+        console.log('this.constructor.name=' + this.constructor.name);
+    };
+}
+function childClassName() {
+    this.childField = 'child field';
+}
+childClassName.prototype.methodName = new baseClassName().methodName;
+
+/*(could also do a mixin of all members)
+var temp = new baseClassName();
+for (var key in temp) {
+    childClassName.prototype[key] = temp[key];
+}*/
+
+new childClassName().methodName();
+// result:
+// baseField=undefined
+// childField=child field
+// self.constructor.name=baseClassName
+// this.constructor.name=childClassName
+
+//'this' in base class is now a reference to 'this' of child class, which is why you should NOT use this method for ineheritance!
+
+console.log('\n\n\n');
+
+function className(){}//this is a 'consructor' in javascript
+var instance = new className();
+console.log(instance.constructor);//result: function className(){}
+console.log(instance.constructor.name);//result: className
+
+//a constructor can
+function classNameWithParams(param1){
+    this.param1 = param1;
+    this.test = function(){
+        console.log('test');
+    };
+    this.test();
+}
