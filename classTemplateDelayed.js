@@ -4,8 +4,8 @@ var className = (function() {
         inherit = function(thisArg, args) {
             var parentClass = null,
                 mixins = [];
+                
             if (parentClass) parentClass.apply(thisArg, Array.prototype.slice.call(arguments, 1));
-            
             if (local.__done) return;
             local.__done = true;
             microMixin(Class.prototype, mixins, parentClass);
