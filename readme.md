@@ -1,7 +1,7 @@
 # Javascript OOP Basics #
 
 ## Terminology ##
-- **Field:** a variable that is not a function `var x = 1;`
+- **Field:**: a variable that is not a function `var x = 1;`
 - **Method**: a variable that is a function `var x = function(){};`
 - **Member**: a method or field
 - **Class**: a function intended to be reused by multiple instances by using `new`  keyword *(there are other ways to create an instance)* `function className(){ this.field=''; }`
