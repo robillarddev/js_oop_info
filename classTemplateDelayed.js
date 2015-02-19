@@ -1,12 +1,19 @@
 var className = (function() {
-    //https://github.com/sevin7676/js_oop_info/blob/master/classTemplate.js
+    //https://github.com/sevin7676/js_oop_info/blob/master/classTemplateDelayed.js
     var local = {},
-        parentClass = null,
-        mixins = [];
+        inherit = function(thisArg, args) {
+            var parentClass = null,
+                mixins = [];
+            if (parentClass) parentClass.apply(thisArg, Array.prototype.slice.call(arguments, 1));
+            
+            if (local.__done) return;
+            local.__done = true;
+            microMixin(Class.prototype, mixins, parentClass);
+        };
 
     var Class = function() {
         var _sf = {}, sf = this;
-        if (parentClass) parentClass.call(this /*, args*/ );
+        inherit(this /*, args*/ );
         (function Private() {}).call(_sf);
         (function Public() {}).call(sf);
     };
@@ -21,7 +28,6 @@ var className = (function() {
         (function Private() {}).call(local);
         (function Public() {}).call(Class);
     })();
-
-    microMixin(Class.prototype, mixins, parentClass);
+    
     return Class;
 }());

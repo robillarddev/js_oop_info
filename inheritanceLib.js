@@ -7,6 +7,7 @@
  * @param {object|array<object>} protoMixins - object(s) to mixin by calling [object].prototype on each item.
  *      Null/Undefined objects are ignored.
  * @returns {object} passed object
+ * @note the recipient object wont receive properties for keys that is already has defined
  * @example
  *
  *      var class = function(){};
@@ -25,6 +26,7 @@ function microMixin(obj, mixins, protoMixins) {
         var m = mixins[i];
         if (m == null) continue;
         for (var key in m) {
+            if (typeof obj[key] !== 'undefined' || key in obj) continue;
             obj[key] = m[key];
         }
     }

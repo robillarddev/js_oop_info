@@ -7,12 +7,13 @@
  * @param {object|array<object>} protoMixins - object(s) to mixin by calling [object].prototype on each item.
  *      Null/Undefined objects are ignored.
  * @returns {object} passed object
+ * @note the recipient object wont receive properties for keys that is already has defined
  * @example
  *
  *      var class = function(){};
  *      microMixin(class.prototype, [class1.prototype], [class2]);
  */
-var microMixin = function(obj, mixins, protoMixins) {
+function microMixin(obj, mixins, protoMixins) {
     if (!Array.isArray(mixins)) mixins = [mixins];
     if (!Array.isArray(protoMixins)) protoMixins = [protoMixins];
     for (var n = 0; n < protoMixins.length; n++) {
@@ -20,16 +21,17 @@ var microMixin = function(obj, mixins, protoMixins) {
         if (p == null) continue;
         mixins.push(p.prototype);
     }
-    
+
     for (var i = 0; i < mixins.length; i++) {
         var m = mixins[i];
         if (m == null) continue;
         for (var key in m) {
+            if (typeof obj[key] !== 'undefined' || key in obj) continue;
             obj[key] = m[key];
         }
     }
     return obj;
-};
+}
 
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -120,7 +122,7 @@ var baseConstructor = (function() {
             (function Private() {}).call(_sf);
 
             (function Public() {
-                this.baseField='hello from base';
+                this.baseField = 'hello from base';
                 /** base method */
                 this.baseMethod = function() {
                     return sf.baseField;
@@ -268,8 +270,6 @@ var className = (function() {
 }());
 
 
-
-
 function baseClassName() {
     var self = this;
     this.baseField = 'base field';
@@ -280,6 +280,7 @@ function baseClassName() {
         console.log('this.constructor.name=' + this.constructor.name);
     };
 }
+
 function childClassName() {
     this.childField = 'child field';
 }
@@ -302,16 +303,109 @@ new childClassName().methodName();
 
 console.log('\n\n\n');
 
-function className(){}//this is a 'consructor' in javascript
+function className() {} //this is a 'consructor' in javascript
 var instance = new className();
-console.log(instance.constructor);//result: function className(){}
-console.log(instance.constructor.name);//result: className
+console.log(instance.constructor); //result: function className(){}
+console.log(instance.constructor.name); //result: className
 
 //a constructor can
-function classNameWithParams(param1){
+function classNameWithParams(param1) {
     this.param1 = param1;
-    this.test = function(){
+    this.test = function() {
         console.log('test');
     };
     this.test();
 }
+
+
+// function microMixinDelayed(thisArg,local,Class,parentClass,mixins, arg1,arg2,etc){
+//     console.log('parentClass',parentClass);
+//     if (parentClass) parentClass.apply(thisArg, Array.prototype.slice.call(arguments,5));
+//     if (local.__mixinDone) return;
+//     local.__mixinDone = true;
+//     microMixin(Class.prototype, mixins, parentClass);
+// }
+//#region delayed mixin
+var childDelayed = (function() {
+    //https://github.com/sevin7676/js_oop_info/blob/master/classTemplate.js
+    var local = {},
+        // parentClass = baseDelayed,
+        // mixins = [];
+        inherit = function(thisArg, p1, p2, etc) {
+            var parentClass = baseDelayed,
+                mixins = [];
+            if (parentClass) parentClass.apply(thisArg, Array.prototype.slice.call(arguments, 1));
+            
+            if (local.__done) {
+                console.log('localdone',local);
+                return;
+            }
+            local.__done = true;
+            microMixin(Class.prototype, mixins, parentClass);
+        };
+       
+    var Class = function(param1, param2) {
+        var _sf = {}, sf = this;
+        inherit(this, param1);
+        //NOTE: this didnt work because the parent and mixins must be wrapped in a local function that is called when class is instantiated
+        // microMixinDelayed(this, local, Class, parentClass, mixins, param1);
+        (function Private() {}).call(_sf);
+        (function Public() {
+            this.childPublicFieldFromParam = param2;
+        }).call(sf);
+    };
+
+    (function Prototype() {
+        //this.demo = function() {var sf = this;};
+    }).call(Class.prototype);
+
+    (function Static() {
+        var _sf = local,
+            sf = Class;
+        (function Private() {}).call(local);
+        (function Public() {}).call(Class);
+    })();
+    
+    return Class;
+}());
+
+var baseDelayed = (function() {
+    //https://github.com/sevin7676/js_oop_info/blob/master/classTemplate.js
+    var local = {},
+        parentClass = null,
+        mixins = [];
+
+    var Class = function(param1) {
+        var _sf = {}, sf = this;
+        if (parentClass) parentClass.call(this /*, args*/ );
+        (function Private() {}).call(_sf);
+        (function Public() {
+            this.basePublicField = 'base';
+            this.basePublicFieldFromParam = param1;
+        }).call(sf);
+    };
+
+    (function Prototype() {
+        this.baseProtoMethod = function() {
+            var sf = this;
+            return 'baseProtoMethod';
+        };
+    }).call(Class.prototype);
+
+    (function Static() {
+        var _sf = local,
+            sf = Class;
+        (function Private() {}).call(local);
+        (function Public() {}).call(Class);
+    })();
+
+    microMixin(Class.prototype, mixins, parentClass);
+    return Class;
+}());
+
+new childDelayed();//create once just to make sure second one works because we only inherit on first call
+var delayedInstance = window.t4 = new childDelayed('param1Value', 'param2Value');
+console.log('\n\ndelayed inheritance instance (t4)', delayedInstance, '\n\n');
+
+
+//#endregion

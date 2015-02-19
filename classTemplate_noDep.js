@@ -1,9 +1,9 @@
 var className = (function() {
     //https://github.com/sevin7676/js_oop_info/blob/master/classTemplate_noDep.js
-    var local = this;
+    var local = {};
 
     var Class = function() {
-        var _sf = {}, sf = this;        
+        var _sf = {}, sf = this;
         (function Private() {}).call(_sf);
         (function Public() {}).call(sf);
     };
