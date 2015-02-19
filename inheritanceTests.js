@@ -478,12 +478,14 @@ var mixinOfChildDelayed = (function() {
 window.t6 = new mixinOfChildDelayed('param1Value', 'param2Value');
 console.log('\n\mixin of child delayed inheritance instance (t6)', t6, 'This should not be done as it doesnt work properly. Dont inherit a delayed class as a prototype mixin\n\n');
 
+//its ok for a delayed class to be inherited from, but only as a parent class
+window.t5 = new childOfChildDelayed('param1Value', 'param2Value');
+console.log('\n\child of child of delayed inheritance instance (t5)', t5, '\n\n');
+
 new childDelayed();//create once just to make sure second one works because we only inherit on first call
 window.t4 = new childDelayed('param1Value', 'param2Value');
 console.log('\n\ndelayed inheritance instance (t4)', t4, '\n\n');
 
-//its ok for a delayed class to be inherited from, but only
-window.t5 = new childOfChildDelayed('param1Value', 'param2Value');
-console.log('\n\child of child of delayed inheritance instance (t5)', t5, '\n\n');
+
 
 //#endregion
