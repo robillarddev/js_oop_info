@@ -325,6 +325,7 @@ function classNameWithParams(param1) {
 //     local.__mixinDone = true;
 //     microMixin(Class.prototype, mixins, parentClass);
 // }
+
 //#region delayed mixin
 var childDelayed = (function() {
     //https://github.com/sevin7676/js_oop_info/blob/master/classTemplate.js
@@ -403,9 +404,86 @@ var baseDelayed = (function() {
     return Class;
 }());
 
-new childDelayed();//create once just to make sure second one works because we only inherit on first call
-var delayedInstance = window.t4 = new childDelayed('param1Value', 'param2Value');
-console.log('\n\ndelayed inheritance instance (t4)', delayedInstance, '\n\n');
+var childOfChildDelayed = (function() {
+    //https://github.com/sevin7676/js_oop_info/blob/master/classTemplateDelayed.js
+    var local = {},
+        inherit = function(thisArg, args) {
+            var parentClass = childDelayed,
+                mixins = [];
+                
+            if (parentClass) parentClass.apply(thisArg, Array.prototype.slice.call(arguments, 1));
+            if (local.__done) return;
+            local.__done = true;
+            microMixin(Class.prototype, mixins, parentClass);
+        };
 
+    var Class = function() {
+        var _sf = {}, sf = this;
+        inherit(this /*, args*/ );
+        (function Private() {}).call(_sf);
+        (function Public() {}).call(sf);
+    };
+
+    (function Prototype() {
+        //this.demo = function() {var sf = this;};
+    }).call(Class.prototype);
+
+    (function Static() {
+        var _sf = local,
+            sf = Class;
+        (function Private() {}).call(local);
+        (function Public() {}).call(Class);
+    })();
+    
+    return Class;
+}());
+
+
+var mixinOfChildDelayed = (function() {
+    //https://github.com/sevin7676/js_oop_info/blob/master/classTemplateDelayed.js
+    var local = {},
+        inherit = function(thisArg, args) {
+            var parentClass = null,
+                mixins = [childDelayed];
+                
+            if (parentClass) parentClass.apply(thisArg, Array.prototype.slice.call(arguments, 1));
+            if (local.__done) return;
+            local.__done = true;
+            microMixin(Class.prototype, mixins, parentClass);
+        };
+
+    var Class = function() {
+        var _sf = {}, sf = this;
+        inherit(this /*, args*/ );
+        (function Private() {}).call(_sf);
+        (function Public() {
+            this.mixinOfChildDelayed_publicField='field';
+        }).call(sf);
+    };
+
+    (function Prototype() {
+        //this.demo = function() {var sf = this;};
+    }).call(Class.prototype);
+
+    (function Static() {
+        var _sf = local,
+            sf = Class;
+        (function Private() {}).call(local);
+        (function Public() {}).call(Class);
+    })();
+    
+    return Class;
+}());
+
+window.t6 = new mixinOfChildDelayed('param1Value', 'param2Value');
+console.log('\n\mixin of child delayed inheritance instance (t6)', t6, 'This should not be done as it doesnt work properly. Dont inherit a delayed class as a prototype mixin\n\n');
+
+new childDelayed();//create once just to make sure second one works because we only inherit on first call
+window.t4 = new childDelayed('param1Value', 'param2Value');
+console.log('\n\ndelayed inheritance instance (t4)', t4, '\n\n');
+
+//its ok for a delayed class to be inherited from, but only
+window.t5 = new childOfChildDelayed('param1Value', 'param2Value');
+console.log('\n\child of child of delayed inheritance instance (t5)', t5, '\n\n');
 
 //#endregion
