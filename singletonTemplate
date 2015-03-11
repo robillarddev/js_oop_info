@@ -10,11 +10,7 @@ var className = (function() {
         (function Private() {}).call(_sf);
         (function Public() {}).call(sf);
     };
-
-    (function Prototype() {
-        //this.demo = function() {var sf = this;};
-    }).call(Class.prototype);
-
+    
     microMixin(Class.prototype, mixins, parentClass);
     return new Class();
 }());
