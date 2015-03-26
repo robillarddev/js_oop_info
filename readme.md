@@ -345,5 +345,25 @@ function className(){}
 		 - *(not sure where the code came from, see [this StackOverflow question](http://stackoverflow.com/questions/21369432/why-should-we-use-object-create) about the same code*
 	 
 
+##Custom Errors##
+- [Stack Overflow question about custom errors] (http://stackoverflow.com/questions/783818/how-do-i-create-a-custom-error-in-javascript/17891099#17891099)
+```javascript
+function MyError() {
+    var temp = Error.apply(this, arguments);
+    temp.name = this.name = 'MyError';
+    this.stack = temp.stack;
+    this.message = temp.message;
+}
+//inherit prototype using ECMAScript 5 (IE 9+)
+MyError.prototype = Object.create(Error.prototype, {
+    constructor: {
+        value: MyError,
+        writable: true,
+        configurable: true
+    }
+});
+```
+
+
 ####TODO####
 - [ ] Add details about the various ways to write classes: `function className(); var className=function(); //etc...`
