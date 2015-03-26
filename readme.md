@@ -347,6 +347,7 @@ function className(){}
 
 ##Custom Errors##
 - [Stack Overflow question about custom errors] (http://stackoverflow.com/questions/783818/how-do-i-create-a-custom-error-in-javascript/17891099#17891099)
+- Use errorTemplate in this repo if using this repo's inheritance lib, or use template below.
 ```javascript
 function MyError() {
     var temp = Error.apply(this, arguments);
